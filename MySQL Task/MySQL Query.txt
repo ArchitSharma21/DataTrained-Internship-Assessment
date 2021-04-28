@@ -1,0 +1,25 @@
+CREATE TABLE T2(
+    CHAR CUST_ID, 
+    INT Sales, 
+    INT Units);
+    
+CREATE TABLE T3(
+    CHAR CUST_ID, 
+    INT Sales, 
+    INT Units);
+
+INSERT INTO T2(CUST_ID, Sales)
+SELECT DISTINCT CUST_ID, Value FROM T1 WHERE Metric = 'Sales';
+
+INSERT INTO T3(CUST_ID, Units)
+SELECT DISTINCT CUST_ID, Value FROM T1 WHERE Metric = 'Units';
+
+CREATE TABLE T4
+SELECT T2.CUST_ID, T2.Sales, T3.Units
+FROM T2 INNER JOIN T3 ON T2.CUST_ID = T3.CUST_ID;
+
+SELECT * FROM T4;							-- to check output
+
+DROP TABLE T2;
+
+DROP TABLE T3;
